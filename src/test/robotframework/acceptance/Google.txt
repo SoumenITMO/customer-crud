@@ -1,0 +1,10 @@
+*** Settings ***
+Documentation  This is a test
+Library  Selenium2Library
+
+*** Test cases ***
+Open And Close Google Site
+    Open Browser  http://www.google.com
+
+Search Robotframework Selenium2Library
+    Google.Search.Search String    Robotframework Selenium2Library

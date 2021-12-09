@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Customer List</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Customer List</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Birthdate</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody id="customer-list"> </tbody>
+  </table>
+  <a href="create.html"> Create Customer </a>
+</div>
+
+<script>
+var table_content = "";
+
+$(document).ready(function() {
+  $.ajax({
+    method: "GET",
+    url: "customer/all",
+  })
+  .done(function( response ) {
+    $.each(response, function(index, value) {
+      table_content += "<tr>";
+      table_content += "<td>" + value.firstname + "</td>";
+      table_content += "<td>" + value.lastname + "</td>";
+      table_content += "<td>" + value.birthdate + "</td>";
+      table_content += "<td>" + "<button type='button' onclick = deletecustomer(" + value.id + ") class='btn btn-danger'>Delete</button> <button type='button' onclick = editcustomer(" + value.id + ") class='btn btn-primary'>Edit</button>" + "</td>";
+      table_content += "</tr>";
+    });
+    $("#customer-list").html(table_content);
+  });
+});
+
+function editcustomer(customerid) {
+  window.location = "edit.html?id=" + customerid;
+}
+
+function deletecustomer(customerid) {
+  $.ajax({
+    method: "DELETE",
+    url: "customer/remove/" + customerid,
+  })
+  .done(function( response ) {
+    window.location = "home.html";
+  });
+}
+</script>
+
+</body>
+</html>

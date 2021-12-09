@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create Customer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form id="create-form" style="width: 440px; margin-left: 33px;">
+    <div class="form-group">
+        <label for="firstname">First Name</label>
+        <input type="text" class="form-control" required name="firstname" id="firstname" placeholder="First Name">
+    </div>
+
+    <div class="form-group">
+        <label for="lastname">Last Name</label>
+        <input type="text" class="form-control" required name="lastname" id="lastname" placeholder="Last Name">
+    </div>
+
+    <div class="form-group">
+        <label for="username">User Name</label>
+        <input type="text" class="form-control" required name="username" id="username" placeholder="User Name">
+    </div>
+
+    <div class="form-group">
+        <label for="password">Pasword</label>
+        <input type="password" class="form-control" required name="password" id="password" placeholder="Password">
+    </div>
+
+    <div class="form-group">
+        <label for="birthdate">Birthdate</label>
+        <input type="date" class="form-control" required name="birthdate" id="birthdate">
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+</body>
+</html>
+
+<script>
+
+$(document).ready(function() {
+$('#create-form').submit(function (event) {
+    event.preventDefault();
+    if ($('#create-form')[0].checkValidity() === true) {
+       savecustomer();
+    }
+   });
+});
+
+function savecustomer() {
+    var customerData = {
+        "username" : $("#lastname").val(),
+        "lastname": $("#lastname").val(),
+        "birthdate": $("#birthdate").val(),
+        "firstname" : $("#firstname").val()
+    };
+    $.ajax({
+        contentType: "application/json",
+        method: "POST",
+        url: "customer/create",
+        data: JSON.stringify(customerData),
+        success: function(response) {
+           window.location = "home.html";
+        }
+   });
+}
+</script>
